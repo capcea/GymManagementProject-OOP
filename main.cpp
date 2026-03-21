@@ -200,4 +200,102 @@ Trainer::~Trainer() {
     noTrainers--;
 }
 
-//Trainer class end
+//Trainer class (end)
+
+//Workout class (start)
+
+class Workout {
+    char* type;
+    int durationMinutes;
+    float estimatedCalories;
+    bool intense;
+    int noExercises;
+    int* repetitions;
+
+public:
+    Workout();
+    Workout(const char* type, int durationMinutes, float estimatedCalories, bool intense, int noExercises, const int* repetitions);
+    Workout(const Workout& obj);
+    Workout& operator=(const Workout& obj);
+    ~Workout();
+};
+
+Workout::Workout() {
+    type = new char[4];
+    strcpy(type, "N/A");
+    durationMinutes = 0;
+    estimatedCalories = 0.0f;
+    intense = false;
+    noExercises = 0;
+    repetitions = nullptr;
+}
+
+Workout::Workout(const char* type, int durationMinutes, float estimatedCalories, bool intense, int noExercises, const int* repetitions) {
+    this->type = new char[strlen(type) + 1];
+    strcpy(this->type, type);
+    this->durationMinutes = durationMinutes;
+    this->estimatedCalories = estimatedCalories;
+    this->intense = intense;
+    this->noExercises = noExercises;
+
+    if (this->noExercises > 0) {
+        this->repetitions = new int[this->noExercises];
+        for (int i = 0; i < this->noExercises; i++) {
+            this->repetitions[i] = repetitions[i];
+        }
+    } else {
+        this->repetitions = nullptr;
+    }
+}
+
+Workout::Workout(const Workout& obj) {
+    this->type = new char[strlen(obj.type) + 1];
+    strcpy(this->type, obj.type);
+    this->durationMinutes = obj.durationMinutes;
+    this->estimatedCalories = obj.estimatedCalories;
+    this->intense = obj.intense;
+    this->noExercises = obj.noExercises;
+
+    if (this->noExercises > 0) {
+        this->repetitions = new int[this->noExercises];
+        for (int i = 0; i < this->noExercises; i++) {
+            this->repetitions[i] = obj.repetitions[i];
+        }
+    } else {
+        this->repetitions = nullptr;
+    }
+}
+
+Workout& Workout::operator=(const Workout& obj) {
+    if (this == &obj) {
+        return *this;
+    }
+
+    delete[] type;
+    delete[] repetitions;
+
+    this->type = new char[strlen(obj.type) + 1];
+    strcpy(this->type, obj.type);
+    this->durationMinutes = obj.durationMinutes;
+    this->estimatedCalories = obj.estimatedCalories;
+    this->intense = obj.intense;
+    this->noExercises = obj.noExercises;
+
+    if (this->noExercises > 0) {
+        this->repetitions = new int[this->noExercises];
+        for (int i = 0; i < this->noExercises; i++) {
+            this->repetitions[i] = obj.repetitions[i];
+        }
+    } else {
+        this->repetitions = nullptr;
+    }
+
+    return *this;
+}
+
+Workout::~Workout() {
+    delete[] type;
+    delete[] repetitions;
+}
+
+//Workout class (end)
