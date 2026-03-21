@@ -130,3 +130,74 @@ Subscription& Subscription::operator=(const Subscription& obj) {
 
 Subscription::~Subscription() {
 }
+
+//Subscription Class (end)
+
+//Trainer Class (Start)
+
+class Trainer {
+    char* name;
+    int experienceYears;
+    float rating;
+    bool available;
+    static int noTrainers;
+
+public:
+    Trainer();
+    Trainer(const char* name, int experienceYears, float rating, bool available);
+    Trainer(const Trainer& obj);
+    Trainer& operator=(const Trainer& obj);
+    ~Trainer();
+};
+
+int Trainer::noTrainers = 0;
+
+Trainer::Trainer() {
+    name = new char[4];
+    strcpy(name, "N/A");
+    experienceYears = 0;
+    rating = 0.0f;
+    available = false;
+    noTrainers++;
+}
+
+Trainer::Trainer(const char* name, int experienceYears, float rating, bool available) {
+    this->name = new char[strlen(name) + 1];
+    strcpy(this->name, name);
+    this->experienceYears = experienceYears;
+    this->rating = rating;
+    this->available = available;
+    noTrainers++;
+}
+
+Trainer::Trainer(const Trainer& obj) {
+    this->name = new char[strlen(obj.name) + 1];
+    strcpy(this->name, obj.name);
+    this->experienceYears = obj.experienceYears;
+    this->rating = obj.rating;
+    this->available = obj.available;
+    noTrainers++;
+}
+
+Trainer& Trainer::operator=(const Trainer& obj) {
+    if (this == &obj) {
+        return *this;
+    }
+
+    delete[] name;
+
+    this->name = new char[strlen(obj.name) + 1];
+    strcpy(this->name, obj.name);
+    this->experienceYears = obj.experienceYears;
+    this->rating = obj.rating;
+    this->available = obj.available;
+
+    return *this;
+}
+
+Trainer::~Trainer() {
+    delete[] name;
+    noTrainers--;
+}
+
+//Trainer class end
