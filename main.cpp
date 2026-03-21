@@ -76,3 +76,57 @@ Member::~Member(){
     delete[] name;
     delete[] weightHistory;
 };
+
+//Member class (End)
+
+//Subscription class(Start)
+class Subscription {
+    char type;
+    double basePrice;
+    int durationMonths;
+    bool active;
+
+public:
+    Subscription();
+    Subscription(char type, double basePrice, int durationMonths, bool active);
+    Subscription(const Subscription& obj);
+    Subscription& operator=(const Subscription& obj);
+    ~Subscription();
+};
+
+Subscription::Subscription() {
+    type = 'B'; //B -Basic, P- Premium, V - VIP
+    basePrice = 0.0;
+    durationMonths = 0;
+    active = false;
+}
+
+Subscription::Subscription(char type, double basePrice, int durationMonths, bool active) {
+    this->type = type;
+    this->basePrice = basePrice;
+    this->durationMonths = durationMonths;
+    this->active = active;
+}
+
+Subscription::Subscription(const Subscription& obj) {
+    this->type = obj.type;
+    this->basePrice = obj.basePrice;
+    this->durationMonths = obj.durationMonths;
+    this->active = obj.active;
+}
+
+Subscription& Subscription::operator=(const Subscription& obj) {
+    if (this == &obj) {
+        return *this;
+    }
+
+    this->type = obj.type;
+    this->basePrice = obj.basePrice;
+    this->durationMonths = obj.durationMonths;
+    this->active = obj.active;
+
+    return *this;
+}
+
+Subscription::~Subscription() {
+}
