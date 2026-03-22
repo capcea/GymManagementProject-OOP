@@ -448,12 +448,52 @@ istream& operator>>(istream& in, Workout& obj) {
 //Workout class (end)
 
 //MAIN
-int main(){
+int main() {
+    Member m;
+    Trainer t;
+    Workout w;
 
-    Trainer m,n;
-    cin >> m>>n;
-    cout << m<< n;
+    int option;
+
+    do {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Add member\n";
+        cout << "2. Add trainer\n";
+        cout << "3. Add workout\n";
+        cout << "4. Show member\n";
+        cout << "5. Show trainer\n";
+        cout << "6. Show workout\n";
+        cout << "0. Exit\n";
+        cout << "Choose option: ";
+        cin >> option;
+
+        switch(option) {
+            case 1:
+                cin >> m;
+                break;
+            case 2:
+                cin >> t;
+                break;
+            case 3:
+                cin >> w;
+                break;
+            case 4:
+                cout << m;
+                break;
+            case 5:
+                cout << t;
+                break;
+            case 6:
+                cout << w;
+                break;
+            case 0:
+                cout << "Exit...\n";
+                break;
+            default:
+                cout << "Invalid option\n";
+        }
+
+    } while(option != 0);
 
     return 0;
-
 }
