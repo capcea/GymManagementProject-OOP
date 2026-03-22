@@ -207,6 +207,8 @@ public:
     Trainer(const Trainer& obj);
     Trainer& operator=(const Trainer& obj);
     ~Trainer();
+    friend ostream& operator<<(ostream& out, const Trainer& obj);
+    friend istream& operator>>(istream& in, Trainer& obj);
 };
 
 int Trainer::noTrainers = 0;
@@ -257,6 +259,36 @@ Trainer& Trainer::operator=(const Trainer& obj) {
 Trainer::~Trainer() {
     delete[] name;
     noTrainers--;
+}
+ostream& operator<<(ostream& out, const Trainer& obj) {
+    out << "Trainer name: " << obj.name << "\n";
+    out << "Experience years: " << obj.experienceYears << "\n";
+    out << "Rating: " << obj.rating << "\n";
+    out << "Available: " << obj.available << "\n";
+    out << "Total trainers: " << Trainer::noTrainers << "\n";
+
+    return out;
+}
+istream& operator>>(istream& in, Trainer& obj) {
+    char buffer[100];
+
+    cout << "Enter trainer name: ";
+    in >> buffer;
+
+    delete[] obj.name;
+    obj.name = new char[strlen(buffer) + 1];
+    strcpy(obj.name, buffer);
+
+    cout << "Enter experience years: ";
+    in >> obj.experienceYears;
+
+    cout << "Enter rating: ";
+    in >> obj.rating;
+
+    cout << "Is available? (0/1): ";
+    in >> obj.available;
+
+    return in;
 }
 
 //Trainer class (end)
@@ -361,5 +393,11 @@ Workout::~Workout() {
 
 //MAIN
 int main(){
-    
+
+    Trainer m,n;
+    cin >> m>>n;
+    cout << m<< n;
+
+    return 0;
+
 }
