@@ -309,6 +309,8 @@ public:
     Workout(const Workout& obj);
     Workout& operator=(const Workout& obj);
     ~Workout();
+    friend ostream& operator<<(ostream& out, const Workout& obj);
+    friend istream& operator>>(istream& in, Workout& obj);
 };
 
 Workout::Workout() {
@@ -388,7 +390,61 @@ Workout::~Workout() {
     delete[] type;
     delete[] repetitions;
 }
+ostream& operator<<(ostream& out, const Workout& obj) {
+    out << "Workout type: " << obj.type << "\n";
+    out << "Duration (minutes): " << obj.durationMinutes << "\n";
+    out << "Estimated calories: " << obj.estimatedCalories << "\n";
+    out << "Intense: " << obj.intense << "\n";
+    out << "Number of exercises: " << obj.noExercises << "\n";
+    out << "Repetitions: ";
 
+    if (obj.noExercises > 0 && obj.repetitions != nullptr) {
+        for (int i = 0; i < obj.noExercises; i++) {
+            out << obj.repetitions[i] << " ";
+        }
+    } else {
+        out << "No exercises";
+    }
+
+    out << "\n";
+    return out;
+}
+istream& operator>>(istream& in, Workout& obj) {
+    char buffer[100];
+
+    cout << "Enter workout type: ";
+    in >> buffer;
+
+    delete[] obj.type;
+    obj.type = new char[strlen(buffer) + 1];
+    strcpy(obj.type, buffer);
+
+    cout << "Enter duration in minutes: ";
+    in >> obj.durationMinutes;
+
+    cout << "Enter estimated calories: ";
+    in >> obj.estimatedCalories;
+
+    cout << "Is it intense? (0/1): ";
+    in >> obj.intense;
+
+    cout << "Enter number of exercises: ";
+    in >> obj.noExercises;
+
+    delete[] obj.repetitions;
+
+    if (obj.noExercises > 0) {
+        obj.repetitions = new int[obj.noExercises];
+        for (int i = 0; i < obj.noExercises; i++) {
+            cout << "Repetitions for exercise " << i + 1 << ": ";
+            in >> obj.repetitions[i];
+        }
+    } else {
+        obj.repetitions = nullptr;
+    }
+
+    return in;
+}
 //Workout class (end)
 
 //MAIN
