@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <cstring>
 
 using namespace std;
 
@@ -18,7 +18,9 @@ public:
     Member(const Member &obj);
     Member& operator=(const Member &obj);
     ~Member();
-}
+    friend ostream& operator<<(ostream& out, const Member& obj);
+    friend istream& operator>>(istream& in, Member& obj);
+};
 
 Member::Member(){
     name = new char[4];
@@ -27,7 +29,7 @@ Member::Member(){
     weight = 0.0f;
     active = false;
     noMeasurements = 0;
-    weightHistory = nullptr
+    weightHistory = nullptr;
 
 }
 
@@ -50,7 +52,7 @@ Member::Member(const Member &obj){
     this->weight = obj.weight;
     this->active = obj.active;
     this->noMeasurements = obj.noMeasurements;
-    this->weightHistory = nullptr
+    this->weightHistory = nullptr;
     for (int i = 0; i < obj.noMeasurements; i++)
         this->weightHistory[i] = obj.weightHistory[i];
 }
@@ -59,7 +61,7 @@ Member& Member::operator=(const Member &obj){
     if(this == &obj)
         return *this;
     delete[] name;
-    delete[] weightHistory
+    delete[] weightHistory;
     this->name = new char[strlen(obj.name)+1];
     strcpy(this->name, obj.name);
     this->age = obj.age;
@@ -69,13 +71,70 @@ Member& Member::operator=(const Member &obj){
     this->weightHistory = new float[this->noMeasurements];
     for (int i = 0; i < obj.noMeasurements; i++)
         this->weightHistory[i] = obj.weightHistory[i];
-    return *this
+    return *this;
 }
 
 Member::~Member(){
     delete[] name;
     delete[] weightHistory;
 };
+
+ostream& operator<<(ostream& out, const Member& obj) {
+    out << "Member name: " << obj.name << "\n";
+    out << "Age: " << obj.age << "\n";
+    out << "Weight: " << obj.weight << "\n";
+    out << "Active: " << obj.active << "\n";
+    out << "Number of measurements: " << obj.noMeasurements << "\n";
+    out << "Weight history: ";
+
+    if (obj.noMeasurements > 0 && obj.weightHistory != nullptr) {
+        for (int i = 0; i < obj.noMeasurements; i++) {
+            out << obj.weightHistory[i] << " ";
+        }
+    } else {
+        out << "No measurements";
+    }
+
+    out << "\n";
+    return out;
+}
+
+istream& operator>>(istream& in, Member& obj) {
+    char buffer[100];
+
+    cout << "Enter member name: ";
+    in >> buffer;
+
+    delete[] obj.name;
+    obj.name = new char[strlen(buffer) + 1];
+    strcpy(obj.name, buffer);
+
+    cout << "Enter age: ";
+    in >> obj.age;
+
+    cout << "Enter weight: ";
+    in >> obj.weight;
+
+    cout << "Is active? (0/1): ";
+    in >> obj.active;
+
+    cout << "Enter number of measurements: ";
+    in >> obj.noMeasurements;
+
+    delete[] obj.weightHistory;
+
+    if (obj.noMeasurements > 0) {
+        obj.weightHistory = new float[obj.noMeasurements];
+        for (int i = 0; i < obj.noMeasurements; i++) {
+            cout << "Weight history[" << i << "]: ";
+            in >> obj.weightHistory[i];
+        }
+    } else {
+        obj.weightHistory = nullptr;
+    }
+
+    return in;
+}
 
 //Member class (End)
 
@@ -299,3 +358,8 @@ Workout::~Workout() {
 }
 
 //Workout class (end)
+
+//MAIN
+int main(){
+    
+}
